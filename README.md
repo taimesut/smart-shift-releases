@@ -1,21 +1,28 @@
-# Smart Shift Desktop — Official Downloads
+# Smart Shift Desktop — Windows Releases
 
-This public repository is the **distribution-only** channel for the Windows application. The source code and build configuration stay in the private repository **taimesut/smart-shift-desktop**.
+Public distribution channel for signed Windows desktop installers built from private `taimesut/smart-shift-desktop`.
 
-## Installation
+## Demo/Beta and Stable
 
-When the first stable release is published, download **SmartShift-Setup-X.Y.Z.exe** from the Releases section. Do not download installers from third-party mirrors.
+| Channel | GitHub release type | Tag example |
+|---|---|---|
+| Demo / Beta | **Prerelease** | `v0.3.0-beta.1` |
+| Stable | **Normal release** | `v0.3.0` |
 
-## Updates
+Open the [Releases page](https://github.com/taimesut/smart-shift-releases/releases) to download an installer.
 
-Smart Shift checks the latest stable release when starting. For users running a signed production build, the app will show **Cập nhật ngay / Để sau** when a newer version is available. Clicking to update downloads the installer and verifies its hash against a signed manifest before installing.
+Every signed release should include these **assets**:
 
-Each release must contain:
+- `SmartShift-Setup-X.Y.Z[-beta.N].exe` — Windows installer.
+- `manifest.json` — signed metadata including channel, version, SHA-256 and byte count.
+- `manifest.sig` — detached Ed25519 signature for the manifest.
 
-- SmartShift-Setup-X.Y.Z.exe — Windows x64 installer.
-- manifest.json — version, size and SHA-256 digest.
-- manifest.sig — Ed25519 signature of the exact manifest bytes.
+## In-app update behavior
 
-The public repository should never contain Python source code, API keys, signing private keys or internal SOC data.
+Choose **Demo / Beta** to see newer Beta and Stable releases, or **Ổn định / Stable** to see only newer Stable releases. The application checks at startup and via **Kiểm tra cập nhật**. When a newer signed release is available it offers **Cập nhật ngay** / **Để sau**.
 
-**Current status:** The Python desktop pilot is being tested. A signed Windows installer will appear here only after validation and maintainer configuration of release secrets. The initial pilot is not yet equivalent to the SOC Web production roster solver.
+**Important:** Legacy 0.2.0 and unsigned GitHub Actions trial installers cannot self-update because they do not contain the public verification key. Testers must manually install the **first signed Beta** once; all following updates can use in-app update.
+
+Source code, private signing keys, API keys and SOC employee data must **not** be uploaded to this public repository.
+
+**Current status:** No release is published until the maintainer configures `UPDATE_SIGNING_KEY_B64` and `PUBLISH_TOKEN` secrets in the **private** source repository and pushes a matching signed version tag. Do not download unofficial binaries.
